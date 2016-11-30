@@ -1,6 +1,8 @@
-package entidade;
+package Instancia;
 
 import java.util.ArrayList;
+
+import Modelo.*;
 
 public class Instancia {
     private int id;

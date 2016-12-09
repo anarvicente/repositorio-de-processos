@@ -1,6 +1,8 @@
 package entidade;
 
-public abstract class TipoRecurso {
+import java.io.Serializable;
+
+public abstract class TipoRecurso extends IOSerial implements Serializable{
 	private int id;
 	
 	public void setId(int i)

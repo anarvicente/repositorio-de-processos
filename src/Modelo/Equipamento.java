@@ -1,9 +1,16 @@
 package entidade;
 
-public class Equipamento extends TipoRecurso{
+import java.io.Serializable;
+
+public class Equipamento extends TipoRecurso implements Serializable{
 	
 	private int codigoTipo;
 	private String descricao;
+	
+	Equipamento(int i, String s){
+		codigoTipo = i;
+		descricao = s;
+	}
 	
 	public void setCodigoTipo(int i)
 	{

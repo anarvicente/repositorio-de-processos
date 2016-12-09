@@ -6,7 +6,7 @@ public class Dominio {
 	private ArrayList<ObjetodeFluxo> lst;
 	
 	public Dominio(){
-		lst = new ArrayList();
+		lst = new ArrayList(10);
 	}
 	
 	public void setDominio(ObjetodeFluxo o){
@@ -18,7 +18,12 @@ public class Dominio {
 	}
 	
 	public ObjetodeFluxo getDominio(int i){
-		return lst.get(i);
+		if (i < lst.size() && i > -1) {
+			return lst.get(i);
+		}
+		else{
+			return null;
+		}
 	}
 	
 	

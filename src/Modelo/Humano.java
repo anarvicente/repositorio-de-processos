@@ -1,6 +1,8 @@
 package entidade;
 
-public class Humano extends TipoRecurso {
+import java.io.Serializable;
+
+public class Humano extends TipoRecurso implements Serializable{
 
 	private int qualificacao;
 	

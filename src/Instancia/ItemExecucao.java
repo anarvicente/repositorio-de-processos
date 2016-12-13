@@ -1,18 +1,20 @@
-package entidade;
+package Instancia;
+
+import Modelo.*;
 
 public class ItemExecucao {
-	private ObjetoFluxo item;
+	private ObjetodeFluxo item;
 	private Boolean terminado;
 	
-	public ItemExecucao(ObjetoFluxo item, Boolean terminado){
+	public ItemExecucao(ObjetodeFluxo item, Boolean terminado){
 		this.item = item;
 		this.terminado = terminado;
 	}
-	public ObjetoFluxo getItem(){
+	public ObjetodeFluxo getItem(){
 		return item;
 	}
 	
-	public void setItem(ObjetoFluxo item){
+	public void setItem(ObjetodeFluxo item){
 		this.item = item;
 	}
 	

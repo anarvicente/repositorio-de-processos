@@ -1,37 +1,30 @@
-package entidade;
+package Instancia;
 
 import java.util.ArrayList;
 
 public class Instancia {
     private int id;
     private String descricao;
-    private ArrayList<TipoRecurso> mapaAlocRecursos;
+    private ArrayList<Recurso> alocRecursos;
 
-	public Instancia(int id, String descricao, ArrayList<TipoRecurso> mapaAlocRecursos) {
-        this.setId(id);
+	public Instancia(String descricao, ArrayList<Recurso> alocRecursos) {
+        this.id = 2;
         this.setDescricao(descricao);
-        this.setMapaAlocRecursos(mapaAlocRecursos);
+        this.setAlocRecursos(alocRecursos);
     }
 
 	/**
 	 * @return the id
 	 */
 	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
+		return this.id;
 	}
 
 	/**
 	 * @return the descricao
 	 */
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	/**
@@ -42,16 +35,16 @@ public class Instancia {
 	}
 
 	/**
-	 * @return the mapaAlocRecursos
+	 * @return the alocRecursos
 	 */
-	public ArrayList<TipoRecurso> getMapaAlocRecursos() {
-		return mapaAlocRecursos;
+	public ArrayList<Recurso> getAlocRecursos() {
+		return this.alocRecursos;
 	}
 
 	/**
-	 * @param mapaAlocRecursos the mapaAlocRecursos to set
+	 * @param alocRecursos the alocRecursos to set
 	 */
-	public void setMapaAlocRecursos(ArrayList<TipoRecurso> mapaAlocRecursos) {
-		this.mapaAlocRecursos = mapaAlocRecursos;
+	public void setAlocRecursos(ArrayList<Recurso> alocRecursos) {
+		this.alocRecursos = alocRecursos;
 	}
 }

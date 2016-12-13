@@ -1,16 +1,14 @@
-package entidade;
+package Modelo;
 
 public class Humano extends TipoRecurso {
 
 	private int qualificacao;
 	
-	public int getQualificacao()
-	{
+	public int getQualificacao() {
 		return qualificacao;
 	}
 	
-	public void setQualificacao(int i)
-	{
+	public void setQualificacao(int i) {
 		qualificacao = i;
 	}
 	

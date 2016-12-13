@@ -1,4 +1,4 @@
-package entidade;
+package Modelo;
 
 import java.util.ArrayList;
 
@@ -6,7 +6,7 @@ public class Dominio {
 	private ArrayList<ObjetodeFluxo> lst;
 	
 	public Dominio(){
-		lst = new ArrayList();
+		lst = new ArrayList<ObjetodeFluxo>();
 	}
 	
 	public void setDominio(ObjetodeFluxo o){

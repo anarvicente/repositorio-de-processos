@@ -1,4 +1,4 @@
-package entidade;
+package Instancia;
 
 public class Recurso {
 	private int id;
@@ -7,7 +7,7 @@ public class Recurso {
 	private String descricao;
 	
 	public Recurso(int id, TipoRecurso tipo, String nome, String descricao) {
-		this.setId(id);
+		this.id = 2;
 		this.setTipo(tipo);
 		this.setNome(nome);
 		this.setDescricao(descricao);
@@ -17,21 +17,14 @@ public class Recurso {
 	 * @return the id
 	 */
 	public int getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(int id) {
-		this.id = id;
+		return this.id;
 	}
 
 	/**
 	 * @return the nome
 	 */
 	public String getNome() {
-		return nome;
+		return this.nome;
 	}
 
 	/**
@@ -45,7 +38,7 @@ public class Recurso {
 	 * @return the descricao
 	 */
 	public String getDescricao() {
-		return descricao;
+		return this.descricao;
 	}
 
 	/**
@@ -59,7 +52,7 @@ public class Recurso {
 	 * @return the tipo
 	 */
 	public TipoRecurso getTipo() {
-		return tipo;
+		return this.tipo;
 	}
 
 	/**

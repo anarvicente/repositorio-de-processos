@@ -1,8 +1,8 @@
-package entidade;
+package Instancia;
+
 import java.util.ArrayList;
 
-public class TabeladeExecucao extends ArrayList<ItemExecucao> {
-	
+public class TabeladeExecucao extends ArrayList<ItemExecucao> {	
 	/**
 	 * 
 	 */
@@ -10,8 +10,5 @@ public class TabeladeExecucao extends ArrayList<ItemExecucao> {
 
 	public TabeladeExecucao(int tam){
 		super(tam);
-	}
-	
-		
+	}	
 }
-

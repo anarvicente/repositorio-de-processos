@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Instancia;
+package controle;
 
+import Instancia.Recurso;
 import Serializador.EntryFile;
 import Serializador.IOSerial;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class DadosRecurso extends IOSerial {
 
     public DadosRecurso() throws IOException {
         this.quantRecursos = 0;
-        this.arquivoRecursos = new EntryFile("ArquivoRecursos");
+        this.arquivoRecursos = new EntryFile("src/arquivos/arquivoRecursos");
     }
     
     public boolean salvarRecurso(Recurso recurso){

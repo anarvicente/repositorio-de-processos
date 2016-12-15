@@ -21,10 +21,10 @@ public class Principal {
         dadosInstancia.salvarInstancia(inst);
         */
         dadosInstancia.getListaInstancia();
-        inst = dadosInstancia.getInstancia(2);
-        inst.setNome("ka");
-        inst.setDescricao("aaaa");
-        dadosInstancia.atualizaInstancia(2, inst);
+        inst = dadosInstancia.getInstancia(6);
+        inst.setNome("sss");
+        inst.setDescricao("ggg");
+        dadosInstancia.atualizaInstancia(6, inst);
         dadosInstancia.getListaInstancia();
         dadosInstancia.imprimeInstancias();
     }

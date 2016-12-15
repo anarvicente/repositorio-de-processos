@@ -7,6 +7,7 @@ import java.io.*;
 
 public class Instancia extends IOSerial implements Serializable {
     private Integer id;
+    private String nome;
     private String descricao;
     private ArrayList<Recurso> alocRecursos;
     
@@ -24,6 +25,20 @@ public class Instancia extends IOSerial implements Serializable {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * @return the nome
+     */
+    public String getNome() {
+        return this.nome;
+    }
+
+    /**
+     * @param nome the nome to set
+     */
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     /**

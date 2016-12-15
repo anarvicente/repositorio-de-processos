@@ -5,7 +5,7 @@ import Modelo.*;
 import Serializador.*;
 
 public class Recurso extends IOSerial implements Serializable {
-    private int id;
+    private Integer id;
     private TipoRecurso tipo;
     private String nome;
     private String descricao;
@@ -16,14 +16,14 @@ public class Recurso extends IOSerial implements Serializable {
     /**
      * @return the id
      */
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
     /**
      * @param id the id to set
      */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

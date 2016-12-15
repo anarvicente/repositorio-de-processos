@@ -4,12 +4,28 @@ import java.io.*;
 import Modelo.*;
 import Serializador.*;
 
-public class Recurso extends IOSerial implements Serializable {
+public class Recurso extends IOSerial{
     private Integer id;
     private TipoRecurso tipo;
     private String nome;
     private String descricao;
-    private EntryFile arq;
+    private boolean disponibilidade;
+
+    public boolean isDisponibilidade() {
+        return disponibilidade;
+    }
+
+    public void setDisponibilidade(boolean disponibilidade) {
+        this.disponibilidade = disponibilidade;
+    }
+    
+    public Recurso(TipoRecurso tipo, String nome, String descricao){
+        this.id = null;
+        this.tipo = tipo;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.disponibilidade = true;
+    }
 
     public Recurso() { }
 
@@ -69,22 +85,7 @@ public class Recurso extends IOSerial implements Serializable {
         this.tipo = tipo;
     }
 
-    public static byte[] serialize(Recurso recurso) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.writeObject(recurso);
-        oos.flush();
-
-        return baos.toByteArray();
-    }
-
-    public static Recurso deserialize(byte[] byteArray) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(byteArray));
-        Recurso recurso = (Recurso) ois.readObject();
-
-        return recurso;
-    }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
@@ -108,5 +109,10 @@ public class Recurso extends IOSerial implements Serializable {
             return false;
         }
         return true;
+    }
+    
+    public void imprimirRecurso(){
+        System.out.println("\nNome: " +
+                "Tipo de Recurso: " + getTipo().getId() + "\nNome: " +getNome() + "\nDescrição: " + getDescricao());
     }
 }

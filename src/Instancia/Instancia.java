@@ -69,7 +69,7 @@ public class Instancia extends IOSerial implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Instancia)) {
             return false;
         }
         final Instancia other = (Instancia) obj;

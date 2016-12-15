@@ -69,7 +69,7 @@ public class Recurso extends IOSerial implements Serializable {
         this.tipo = tipo;
     }
 
-    public static byte[] serialize(Recurso recurso) throws IOException{
+    public static byte[] serialize(Recurso recurso) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(recurso);
@@ -78,13 +78,12 @@ public class Recurso extends IOSerial implements Serializable {
         return baos.toByteArray();
     }
 
-    public static Recurso deserialize(byte[] byteArray)
-        throws IOException, ClassNotFoundException {
-            ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(byteArray));
-            Recurso recurso = (Recurso) ois.readObject();
+    public static Recurso deserialize(byte[] byteArray) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(byteArray));
+        Recurso recurso = (Recurso) ois.readObject();
 
-            return recurso;
-        }
+        return recurso;
+    }
 
     @Override
     public int hashCode() {
@@ -101,7 +100,7 @@ public class Recurso extends IOSerial implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        if (!(obj instanceof Recurso)) {
             return false;
         }
         final Recurso other = (Recurso) obj;

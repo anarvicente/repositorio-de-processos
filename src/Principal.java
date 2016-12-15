@@ -20,11 +20,11 @@ public class Principal {
 
         dadosInstancia.salvarInstancia(inst);
         */
-        dadosInstancia.getListaInstancia();
+        /*dadosInstancia.getListaInstancia();
         inst = dadosInstancia.getInstancia(6);
         inst.setNome("sss");
         inst.setDescricao("ggg");
-        dadosInstancia.atualizaInstancia(6, inst);
+        dadosInstancia.atualizaInstancia(6, inst);*/
         dadosInstancia.getListaInstancia();
         dadosInstancia.imprimeInstancias();
     }

@@ -3,15 +3,23 @@ package Instancia;
 import java.util.ArrayList;
 
 import Serializador.*;
+import fronteira.Saida;
 import java.io.*;
 
 public class Instancia extends IOSerial implements Serializable {
     private Integer id;
     private String nome;
     private String descricao;
-    private ArrayList<Recurso> alocRecursos;
+    private ArrayList<Integer> recursos;
+    private EntryFile arquivo;
     
-    public Instancia() { }
+    public Instancia() { super(); }
+    /**
+     * @return the 
+     */
+    public EntryFile getArquivo() {
+        return this.arquivo;
+    }
 
     /**
      * @return the id
@@ -58,15 +66,35 @@ public class Instancia extends IOSerial implements Serializable {
     /**
      * @return the alocRecursos
      */
-    public ArrayList<Recurso> getAlocRecursos() {
-        return this.alocRecursos;
+    public ArrayList<Integer> getRecursos() {
+        return this.recursos;
     }
 
     /**
      * @param recurso the recurso to set
      */
-    public void setAlocRecursos(Recurso recurso) {
-        this.alocRecursos.add(recurso);
+    public void setAlocRecursos(int idRecurso) {
+        this.recursos.add(idRecurso);
+    }
+    
+    public void print() {
+        Saida.println(getId() + "\t" + getNome() + "\t" + getDescricao());
+    }
+
+    public static byte[] serialize(Recurso recurso) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.writeObject(recurso);
+        oos.flush();
+
+        return baos.toByteArray();
+    }
+
+    public static Recurso deserialize(byte[] byteArray) throws IOException, ClassNotFoundException {
+        ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(byteArray));
+        Recurso recurso = (Recurso) ois.readObject();
+
+        return recurso;
     }
 
     @Override

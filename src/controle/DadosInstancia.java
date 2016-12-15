@@ -1,0 +1,70 @@
+package controle;
+
+import Instancia.Instancia;
+import Serializador.EntryFile;
+import Serializador.IOSerial;
+import fronteira.Saida;
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author douglas
+ */
+
+public class DadosInstancia extends IOSerial implements Serializable {
+    private Instancia instancia;
+    private ArrayList<Long> listIndices;
+    private ArrayList<Instancia> listaInstancia;
+    private EntryFile arquivo;
+    
+    public DadosInstancia() throws IOException {
+        super();
+        try {
+            arquivo = new EntryFile("src/arquivos/arquivoInstancias");
+        } catch(IOException ioe) {
+            Saida.println("Ocorreu um erro inexperado:\n" + ioe);
+        }
+        this.listIndices = arquivo.getLstIndex();
+        this.listaInstancia = new ArrayList<>();
+    }
+    
+    public Instancia getInstancia() {
+        return this.instancia;
+    }
+    
+    public ArrayList<Instancia> getListaInstancia() {
+        try {
+            for (int i = 0; i < listIndices.size(); i++) {
+                listaInstancia.add((Instancia)this.arquivo.read(listIndices.get(i)));
+            }
+        } catch(ClassNotFoundException | NullPointerException | IOException n) {
+            System.out.print("Ocorreu um erro inesperado: \n" + n);
+        }
+        return listaInstancia;
+    }
+    
+    public boolean salvarInstancia(Instancia obj) {
+        try {
+            if (obj.getId() == null) {
+                obj.setId(listIndices.size() + 1);
+                listIndices.add(this.arquivo.append(obj));
+            }
+            return true;
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um erro inesperado e a instância não foi salva: \n" + ioe);
+            return false;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public void imprimeInstancias() {
+        Saida.println("\nId\tNome\tDescrição");
+        for(int i = 0; i < listaInstancia.size(); i ++) {
+            listaInstancia.get(i).print();
+        }
+    }
+}

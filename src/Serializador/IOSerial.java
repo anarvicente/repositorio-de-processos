@@ -1,5 +1,6 @@
 package Serializador;
 
+import Instancia.Recurso;
 import java.io.*;
 
 /**
@@ -7,18 +8,16 @@ import java.io.*;
  * @author PC-SALA1
  */
 public class IOSerial implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private int id;
-	private String nome;
-	
-	public IOSerial() {}
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    private int id;
+    private String nome;
 
-	public static byte[] serialize(IOSerial entry)
-            throws IOException {
- 
+    public IOSerial() {}
+
+    public static byte[] serialize(IOSerial entry) throws IOException { 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(entry);
@@ -27,9 +26,7 @@ public class IOSerial implements Serializable{
         return baos.toByteArray();
     }
  
-    public static IOSerial deserialize(byte[] byteArray)
-            throws IOException, ClassNotFoundException {
- 
+    public static IOSerial deserialize(byte[] byteArray) throws IOException, ClassNotFoundException { 
         ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(byteArray));
         IOSerial entry = (IOSerial) ois.readObject();
  

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
  
 public class EntryFile {
  
@@ -14,25 +15,30 @@ public class EntryFile {
     private FileChannel fci;
     private FileChannel fcd;
  
-    public EntryFile(String fileName)
-            throws FileNotFoundException, IOException {
- 
+    public EntryFile(String fileName) throws FileNotFoundException, IOException { 
         fci = new RandomAccessFile(fileName + EntryFile.INDEX_EXT, "rw").getChannel();
         fci.force(true);
         fcd = new RandomAccessFile(fileName + EntryFile.DATA_EXT, "rw").getChannel();
         fcd.force(true);
     }
  
-    public void close()
-            throws IOException {
- 
+    public void close() throws IOException { 
         fcd.close();
         fci.close();
     }
+    
+    public ArrayList<Long> getLstIndex() throws IOException {
+        ArrayList<Long> lstIndices = new ArrayList<>();
+        long tam = fci.size() / EntryFile.INDEX_SIZE;
+        
+        for (long i = 0; i < tam; i++) {
+            lstIndices.add(i);
+        }
+        
+        return lstIndices;
+    }
  
-    public long append(IOSerial ios)
-            throws IOException {
- 
+    public long append(IOSerial ios) throws IOException { 
         // Calculate the data index for append to data
         // file and append its value to the index file.
         long byteOffset = fci.size();
@@ -52,9 +58,7 @@ public class EntryFile {
         return index;
     }
  
-    public IOSerial read(long index)
-            throws IOException, ClassNotFoundException {
- 
+    public IOSerial read(long index) throws IOException, ClassNotFoundException { 
         // Get the data index and -length from the index file.
         long byteOffset = index * (long) EntryFile.INDEX_SIZE;
         ByteBuffer bbi = ByteBuffer.allocate(EntryFile.INDEX_SIZE);
@@ -73,7 +77,7 @@ public class EntryFile {
             dataOffsetNext = bbi.getLong();
         }
         int dataSize = (int) (dataOffsetNext - dataOffset);
- 
+        
         // Get the serialized object data in a byte array.
         byte[] se = new byte[dataSize];
         fcd.position(dataOffset);

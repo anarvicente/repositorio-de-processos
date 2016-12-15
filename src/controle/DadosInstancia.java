@@ -27,14 +27,14 @@ public class DadosInstancia extends IOSerial implements Serializable {
             Saida.println("Ocorreu um erro inexperado:\n" + ioe);
         }
         this.listIndices = arquivo.getLstIndex();
-        this.listaInstancia = new ArrayList<>();
     }
     
-    public Instancia getInstancia() {
-        return this.instancia;
+    public Instancia getInstancia(int i) {
+        return this.listaInstancia.get(i);
     }
     
     public ArrayList<Instancia> getListaInstancia() {
+        this.listaInstancia = new ArrayList<>();
         try {
             for (int i = 0; i < listIndices.size(); i++) {
                 listaInstancia.add((Instancia)this.arquivo.read(listIndices.get(i)));
@@ -56,6 +56,19 @@ public class DadosInstancia extends IOSerial implements Serializable {
             System.out.println("Ocorreu um erro inesperado e a instância não foi salva: \n" + ioe);
             return false;
         } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public boolean atualizaInstancia(long i, Instancia obj) {
+        try {
+            this.arquivo.update(i, obj);
+            return true;
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um erro inesperado e a instância não foi alterada: \n" + ioe);
+            return false;
+        } catch (ClassNotFoundException e) {
             System.out.println(e);
             return false;
         }

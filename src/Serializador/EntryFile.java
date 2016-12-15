@@ -86,4 +86,22 @@ public class EntryFile {
         // Deserialize the byte array into an instantiated object.
         return IOSerial.deserialize(se);
     }
+ 
+    public void update(long index, IOSerial ios) throws IOException, ClassNotFoundException { 
+        // Get the data index and -length from the index file.
+        long byteOffset = index * (long) EntryFile.INDEX_SIZE;
+        ByteBuffer bbi = ByteBuffer.allocate(EntryFile.INDEX_SIZE);
+        fci.position(byteOffset);
+        if (fci.read(bbi) == -1) {
+            throw new IndexOutOfBoundsException("Specified index is out of range");
+        }
+        bbi.flip();
+        long dataOffset = bbi.getLong();
+        bbi.rewind();
+        
+        // Get the serialized object data in a byte array.
+        byte[] se = IOSerial.serialize(ios);
+        fcd.position(dataOffset);
+        fcd.write(ByteBuffer.wrap(se));
+    }
 }

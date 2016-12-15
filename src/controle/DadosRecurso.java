@@ -46,7 +46,7 @@ public class DadosRecurso extends IOSerial {
     }
     
     public void lerArquivoRecursos(){
-        for(int i=0;i<quantRecursos; i++){
+        for(int i = 0; i < quantRecursos; i++){
             try{
                 recursos.add((Recurso)arquivoRecursos.read(indexRecursos.get(i)));
             }
@@ -56,8 +56,7 @@ public class DadosRecurso extends IOSerial {
             catch(ClassNotFoundException ex){
                 
             }
-        }
-        
+        }        
     }
     
     public List<Recurso> imprimirRecursosDisponiveis(){

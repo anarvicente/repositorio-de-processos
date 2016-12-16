@@ -244,11 +244,11 @@ public class InterfaceM {
         if (checkInstancia == 1) {
             dadosRecurso.getListaRecurso();
             dadosRecurso.imprimeRecurso();
-            idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: ");
+            idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - sair]: ");
             while (idRecurso != 0) {
                 inst.setAlocRecursos(idRecurso);
                 dadosRecurso.imprimeRecurso();
-                idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: ");                
+                idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - sair]: ");                
             }
         } else if (checkInstancia == 2) {
             /**

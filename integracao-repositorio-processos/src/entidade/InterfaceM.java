@@ -69,12 +69,12 @@ public class InterfaceM {
         
         Modelo mod = novoModelo();
         
-        System.out.print("Dominio:\nDeseja inserir um objeto[1/0] ");
+        System.out.println("\n### DOMINIO ###\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
         check = Input.Int();
         
         // Criação e Inserção do Dominio
         while (check != 0){
-            System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+            System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
             check = Input.Int();
             if (check%3 == 0){
                 mod.setDominio((ObjetodeFluxo) novoEvento());
@@ -85,11 +85,11 @@ public class InterfaceM {
                     mod.setDominio((ObjetodeFluxo) novoSP());
                 }
             }
-            System.out.print("Dominio:\nDeseja inserir outro objeto[1/0] ");
+            System.out.println("\n### DOMINIO ###\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
             check = Input.Int();
         }
         
-        System.out.print("Regras:\nDeseja inserir uma Regra[1/0] ");
+        System.out.println("\n### REGRAS ###\nDeseja inserir uma regra?\n1- Sim\n0- Nao");
         check = Input.Int();
         // Criação e Inserção de Regras
         while (check != 0){
@@ -100,11 +100,11 @@ public class InterfaceM {
             desc = Input.Str();
             temp = new Regra(new TipoRegra(cod,desc));
             
-            System.out.print("Deseja inserir Lado Esquerdo?[1/0] ");
+            System.out.println("Deseja inserir Lado Esquerdo?\n1- Sim\n0- Nao ");
             check = Input.Int();
             // Inserção dos Dominios esquerdos da regra
             while (check != 0){
-                System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+                System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
                 check = Input.Int();
                 if (check%3 == 0){
                     temp.setEsquerdo((ObjetodeFluxo) novoEvento());
@@ -115,15 +115,15 @@ public class InterfaceM {
                         temp.setEsquerdo((ObjetodeFluxo) novoSP());
                     }
                 }
-                System.out.print("\nDeseja inserir outro objeto[1/0] ");
+                System.out.println("\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
                 check = Input.Int();
             }
             
-            System.out.print("Deseja inserir Lado Direito?[1/0] ");
+            System.out.println("Deseja inserir Lado Direito?\n1- Sim\n0- Nao ");
             check = Input.Int();
             // Inserção dos Dominios direito da regra
             while (check != 0){
-                System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+                System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
                 check = Input.Int();
                 if (check%3 == 0){
                     temp.setDireito((ObjetodeFluxo) novoEvento());
@@ -134,13 +134,13 @@ public class InterfaceM {
                         temp.setDireito((ObjetodeFluxo) novoSP());
                     }
                 }
-                System.out.print("\nDeseja inserir outro objeto[1/0] ");
+                System.out.println("\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
                 check = Input.Int();
             }
             
             mod.setRegra(temp);
             
-            System.out.print("Deseja inserir outra Regra[1/0] ");
+            System.out.println("Deseja inserir outra Regra?\n1- Sim\n0- Nao");
             check = Input.Int();
         
         }
@@ -151,7 +151,7 @@ public class InterfaceM {
     public TipoRecurso novoTR(){
         
         TipoRecurso tr;
-        System.out.print("Deseja um Recurso Humano ou Equipamento [1/0]: ");
+        System.out.println("Deseja um:\n1- Recurso Humano\n0- Equipamento");
         int check = Input.Int();
         if (check%2 == 1){
             tr = (TipoRecurso) new Humano();
@@ -232,28 +232,43 @@ public class InterfaceM {
         return atv;
     }
     
-    public Instancia novaInstancia(DadosInstancia dadosInstancia, DadosRecurso dadosRecurso) {
+    public Instancia novaInstancia(DadosInstancia dadosInstancia, DadosRecurso dadosRecurso) throws IOException, ClassNotFoundException {
         Instancia inst = new Instancia();
-        int checkInstancia = 5, idRecurso;
+        EntryFile arquivo = null;
+        Modelo m1 = null;
+        int checkInstancia = 5, idRecurso, idTabelaExec;
+        String fileName;
+        
         inst.setNome(Entrada.leString("Nome da instância: "));
         inst.setDescricao(Entrada.leString("Descrição: "));
         
         inst.setId(dadosInstancia.defineId());
-        System.out.println("\n[1] Alocar recursos\n[2] Definir tabela de execução\n[0] Menu inicial");
+        System.out.println("\n1- Alocar recursos\n2- Definir tabela de execução\n0- Menu inicial");
         checkInstancia = Entrada.leInt("Selecione a ação desejada: ");
         if (checkInstancia == 1) {
             dadosRecurso.getListaRecurso();
             dadosRecurso.imprimeRecurso();
-            idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - sair]: ");
+            idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - voltar]: ");
             while (idRecurso != 0) {
                 inst.setAlocRecursos(idRecurso);
                 dadosRecurso.imprimeRecurso();
-                idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - sair]: ");                
+                idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: [0 - voltar]: ");                
             }
         } else if (checkInstancia == 2) {
             /**
              * TODO Fluxo de tabela de execução adicionar aqui
              */
+            fileName = Entrada.leString("Informe o arquivo do modelo: ");
+            arquivo = new EntryFile(fileName);
+            m1 = (Modelo) arquivo.read(0);
+            while (m1 == null) {
+                
+            }
+            salvarArq(fileName, m1);
+            // TOdo ajustar erro
+            // main deve retornar o id da tabela de execução criada
+            idTabelaExec = main.main(m1, arquivo);
+            inst.setTabelaExecucao(idTabelaExec);
         }
         
         return inst;
@@ -269,7 +284,7 @@ public class InterfaceM {
         rec.setDisponivel(true);
         
         Saida.println("Tipo do recurso:");
-        Saida.println("0 - Humano\n1 - Equipamento\n");
+        Saida.println("0- Humano\n1- Equipamento\n");
         while (tipo < 0 || tipo > 1) {
             tipo = Entrada.leInt("defina o tipo do recurso: ");
             switch (tipo) {
@@ -288,7 +303,7 @@ public class InterfaceM {
         return rec;
     }
     
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, ClassNotFoundException{
 
         InterfaceM inter = new InterfaceM();
         DadosInstancia dadosInstancia = new DadosInstancia();
@@ -299,12 +314,12 @@ public class InterfaceM {
         int checkMenu = 1, check, menu = 5;
 
         while (checkMenu != 0){
-            System.out.println("\n - Qual item deseja selecionar? - \n[1] Modelo\n[2] Instância\n[3] Recurso\n[0] Sair\nSelecione a opção desejada: ");
+            System.out.println("\nQual item deseja selecionar?\n1- Modelo\n2- Instância\n3- Recurso\n0- Sair\nSelecione a opção desejada: ");
             checkMenu = Input.Int();
             if (checkMenu%menu == 1) {
                 check = 1;
                 while (check != 0) {
-                    System.out.println("[1] Novo\n[2] Abrir\n[3] Salvar \n[4] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    System.out.println("1- Novo\n2- Abrir\n3- Salvar \n4- Visualizar\n0- voltar\nSelecione a ação desejada: ");
                     check = Input.Int();
                     if (check % menu == 1) {
                         mod = inter.novo();
@@ -323,7 +338,7 @@ public class InterfaceM {
             } else if (checkMenu%menu == 2) {
                 check = 1;
                 while (check != 0) {
-                    System.out.println("\n[1] Novo\n[2] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    System.out.println("\n1- Novo\n2- Visualizar\n0- voltar\nSelecione a ação desejada: ");
                     check = Input.Int();
                     if (check % menu == 1) {
                         /**
@@ -339,7 +354,7 @@ public class InterfaceM {
             } else if (checkMenu%menu == 3) {
                 check = 1;
                 while (check != 0) {
-                    System.out.println("\n[1] Novo\n[2] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    System.out.println("\n1- Novo\n2- Visualizar\n0- voltar\nSelecione a ação desejada: ");
                     check = Input.Int();
                     if (check % menu == 1) {
                         rec = inter.novoRecurso();

@@ -14,70 +14,67 @@ import java.io.*;
  */
 public class main extends IOSerial implements Serializable {
 
-    /* ESCOLHER A INSTANCIA NA QUAL EU QUERO VER A TABELA DE EXECUCAO
-       ISSO FICA NO MENU DA INSTANCIA */
-
-    public static void main(String[] args) {
+    public static int main(Modelo m1, EntryFile arquivo) {
         
         Scanner ler = new Scanner(System.in);
-        TabeladeExecucao table = new TabeladeExecucao();
-        
-        InterfaceM inter = new InterfaceM();
+        TabeladeExecucao table = new TabeladeExecucao(); 
 
         try {
-            EntryFile arquivo = new EntryFile("/home/ana/NetBeansProjects/integracao-repositorio-processos/testeModelo");
-            Modelo m1;
-            m1 = (Modelo) arquivo.read(0);
-            inter.salvarArq("/home/ana/NetBeansProjects/integracao-repositorio-processos/testeModelo",m1);
             Dominio d = (Dominio) m1.getDominio();
-            int tam = d.getSize();
+            int tam = d.getSize(); /* qtd de ObjetodeFluxo */
             
             for(int i=0; i<tam;i++){
                 table.addItem(new ItemExecucao(d.getDominio(i), false));
             }
-            //Modelo m = (Modelo)arquivo.read(0);
-            //*/
-            /* Deixar generico escolher qual tabela usar */
-            //TabeladeExecucao t = (TabeladeExecucao) arquivo.read(0);
-            /* ID da tabela serah dado pela instacia */
-            //int tam = t.tabela.size();
-
-            System.out.println("TABELA DE EXECUCAO");
-            for (int i = 0; i < tam; i++) {
-                System.out.println(i + 1 + "- " + table.getItem(i).getItem().getNome());
-            }
             
-            /* Fazer um vetor de tarefas */
-            System.out.println("Qual tarefa deseja iniciar ? ");
-            int opcaoTarefa= ler.nextInt();
-            table.getItem(opcaoTarefa - 1).setInicio();
-            System.out.println("Tarefa " + table.getItem(opcaoTarefa-1).getItem().getNome() + " iniciada\n\n");
 
-            System.out.println("1- Iniciar outra tarefa\n2- Terminar tarefa corrente\n");
-            int opcao = ler.nextInt();
-            switch (opcao) {
-                case 1:
-                    System.out.println("Qual tarefa deseja iniciar ? ");
-                    opcaoTarefa = ler.nextInt();
-                    table.getItem(opcaoTarefa - 1).setInicio();
-                    table.getItem(opcaoTarefa-1).setTerminado(false);
-                    System.out.println("Tarefa " + table.getItem(opcao - 1).getItem().getNome() + " iniciada..\n");
-                    /*Adicionar no vetor de tarefas iniciadas */
-                    break;
-                case 2:
-                    table.getItem(opcaoTarefa-1).setTermino();
-                    table.getItem(opcaoTarefa-1).setTerminado(true);
-                    System.out.println("A tarefa " + table.getItem(opcaoTarefa-1).getItem().getNome() + " terminou..\n\n");
+            System.out.println("########### TABELA DE EXECUCAO ###########");
+            for(int qtd= 0; qtd<tam;qtd++){
+                for (int i = 0; i < tam; i++) {
+                    if(!table.getItem(i).isTerminado()){
+                        System.out.println((i+1) + "- " + table.getItem(i).getItem().getNome());
+                    }
+                }
+                System.out.print("\nQual tarefa deseja iniciar ? ");
+                int opcaoTarefa= ler.nextInt();
+                table.getItem(opcaoTarefa-1).setInicio();
+                System.out.println("\n#### " + table.getItem(opcaoTarefa-1).getItem().getNome() + " iniciada ###\n");
                 
-            }
+                System.out.println("O que deseja fazer agora ?");
+                System.out.println("1- Iniciar outra tarefa\n2- Terminar tarefa corrente\n");
+                int opcao = ler.nextInt();
+                switch (opcao) {
+                    case 1:
+                        for (int i = 0; i < tam; i++) {
+                            if(!table.getItem(i).isTerminado()){
+                                System.out.println((i+1) + "- " + table.getItem(i).getItem().getNome());
+                             }
+                        }
+                        System.out.print("Qual tarefa deseja iniciar ? ");
+                        opcaoTarefa = ler.nextInt();
+                        table.getItem(opcaoTarefa - 1).setInicio();
+                        System.out.println("\n### " + table.getItem(opcao - 1).getItem().getNome() + " iniciada ###\n");
+
+                        break;
+                    case 2:
+                        table.getItem(opcaoTarefa-1).setTermino();
+                        table.getItem(opcaoTarefa-1).setTerminado(true);
+                        System.out.println("### " + table.getItem(opcaoTarefa-1).getItem().getNome() + " terminada ###\n\n");
+                        break;
+                }
+            }   
             
+            System.out.println("Concluido com sucesso!");
+            table.setConcluido(true);
             
-            arquivo.append(table);
-            /* Fazer um menu para finalizar */
-            /* FALTA MARCAR O INICIO E O FIM E ATUALIZAR O ESTADO */
+            EntryFile saida = new EntryFile("tabela-execucao");
+            saida.append(table);
+            arquivo.close();
+            saida.close();
+            
         } catch (Exception e) {
             System.out.println("Nao deu!");
         }
-
+        return 1;
     }
 }

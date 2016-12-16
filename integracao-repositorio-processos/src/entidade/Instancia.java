@@ -9,6 +9,7 @@ public class Instancia extends IOSerial implements Serializable {
     private String nome;
     private String descricao;
     private ArrayList<Integer> recursos;
+    private Integer tabelaExecucao;
     private EntryFile arquivo;
     
     public Instancia() { super(); }
@@ -73,6 +74,20 @@ public class Instancia extends IOSerial implements Serializable {
      */
     public void setAlocRecursos(int idRecurso) {
         this.recursos.add(idRecurso);
+    }
+
+    /**
+     * @return the alocRecursos
+     */
+    public int getTabelaExecucao() {
+        return this.tabelaExecucao;
+    }
+
+    /**
+     * @param tabelaExecucao  the tabelaExecucao to set
+     */
+    public void setTabelaExecucao(int tabelaExecucao) {
+        this.tabelaExecucao = tabelaExecucao;
     }
     
     public void print() {

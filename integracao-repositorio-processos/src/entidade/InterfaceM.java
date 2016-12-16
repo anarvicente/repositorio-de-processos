@@ -69,12 +69,12 @@ public class InterfaceM {
         
         Modelo mod = novoModelo();
         
-        System.out.print("Dominio:\nDeseja inserir um objeto[1/0] ");
+        System.out.println("\n### DOMINIO ###\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
         check = Input.Int();
         
         // Criação e Inserção do Dominio
         while (check != 0){
-            System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+            System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
             check = Input.Int();
             if (check%3 == 0){
                 mod.setDominio((ObjetodeFluxo) novoEvento());
@@ -85,11 +85,11 @@ public class InterfaceM {
                     mod.setDominio((ObjetodeFluxo) novoSP());
                 }
             }
-            System.out.print("Dominio:\nDeseja inserir outro objeto[1/0] ");
+            System.out.println("\n### DOMINIO ###\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
             check = Input.Int();
         }
         
-        System.out.print("Regras:\nDeseja inserir uma Regra[1/0] ");
+        System.out.println("\n### REGRAS ###\nDeseja inserir uma regra?\n1- Sim\n0- Nao");
         check = Input.Int();
         // Criação e Inserção de Regras
         while (check != 0){
@@ -100,11 +100,11 @@ public class InterfaceM {
             desc = Input.Str();
             temp = new Regra(new TipoRegra(cod,desc));
             
-            System.out.print("Deseja inserir Lado Esquerdo?[1/0] ");
+            System.out.println("Deseja inserir Lado Esquerdo?\n1- Sim\n0- Nao ");
             check = Input.Int();
             // Inserção dos Dominios esquerdos da regra
             while (check != 0){
-                System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+                System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
                 check = Input.Int();
                 if (check%3 == 0){
                     temp.setEsquerdo((ObjetodeFluxo) novoEvento());
@@ -115,15 +115,15 @@ public class InterfaceM {
                         temp.setEsquerdo((ObjetodeFluxo) novoSP());
                     }
                 }
-                System.out.print("\nDeseja inserir outro objeto[1/0] ");
+                System.out.println("\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
                 check = Input.Int();
             }
             
-            System.out.print("Deseja inserir Lado Direito?[1/0] ");
+            System.out.println("Deseja inserir Lado Direito?\n1- Sim\n0- Nao ");
             check = Input.Int();
             // Inserção dos Dominios direito da regra
             while (check != 0){
-                System.out.print("Evento - 0\nAtividade - 1\nSubProcesso - 2\nInforme o objeto: ");
+                System.out.print("0- Evento\n1- Atividade\n2- SubProcesso \nInforme o objeto: ");
                 check = Input.Int();
                 if (check%3 == 0){
                     temp.setDireito((ObjetodeFluxo) novoEvento());
@@ -134,13 +134,13 @@ public class InterfaceM {
                         temp.setDireito((ObjetodeFluxo) novoSP());
                     }
                 }
-                System.out.print("\nDeseja inserir outro objeto[1/0] ");
+                System.out.println("\nDeseja inserir outro objeto?\n1- Sim\n0- Nao ");
                 check = Input.Int();
             }
             
             mod.setRegra(temp);
             
-            System.out.print("Deseja inserir outra Regra[1/0] ");
+            System.out.println("Deseja inserir outra Regra?\n1- Sim\n0- Nao");
             check = Input.Int();
         
         }
@@ -151,7 +151,7 @@ public class InterfaceM {
     public TipoRecurso novoTR(){
         
         TipoRecurso tr;
-        System.out.print("Deseja um Recurso Humano ou Equipamento [1/0]: ");
+        System.out.println("Deseja um:\n1- Recurso Humano\n0- Equipamento");
         int check = Input.Int();
         if (check%2 == 1){
             tr = (TipoRecurso) new Humano();
@@ -238,7 +238,7 @@ public class InterfaceM {
             Modelo mod = null;
             int check = 1, menu = 5;
             while (check != 0){
-                System.out.println("[1] Novo\n[2] Abrir\n[3] Salvar \n[4] Visualizar\n[5] Instanciar\n[0] Sair\nSelecione a ação desejada: ");
+                System.out.println("1- Novo\n2- Abrir\n3- Salvar \n4- Visualizar\n5- Instanciar\n0- Sair\nSelecione a ação desejada: ");
                 check = Input.Int();
                 if(check%menu == 1){
                     mod = inter.novo();

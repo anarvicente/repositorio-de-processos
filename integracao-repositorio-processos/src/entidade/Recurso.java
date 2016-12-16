@@ -2,29 +2,19 @@ package entidade;
 
 import java.io.*;
 
-
-
-public class Recurso extends IOSerial{
+public class Recurso extends IOSerial implements Serializable {
     private Integer id;
-    private TipoRecurso tipo;
+    private TipoRecurso tipoRecurso;
     private String nome;
     private String descricao;
-    private boolean disponibilidade;
+    private boolean disponivel;
 
     public boolean isDisponibilidade() {
-        return disponibilidade;
+        return disponivel;
     }
 
-    public void setDisponibilidade(boolean disponibilidade) {
-        this.disponibilidade = disponibilidade;
-    }
-    
-    public Recurso(TipoRecurso tipo, String nome, String descricao){
-        this.id = null;
-        this.tipo = tipo;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.disponibilidade = true;
+    public void setDisponibilidade(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 
     public Recurso() { }
@@ -72,17 +62,31 @@ public class Recurso extends IOSerial{
     }
 
     /**
-     * @return the tipo
+     * @return the tipoRecurso
      */
-    public TipoRecurso getTipo() {
-        return this.tipo;
+    public TipoRecurso getTipoRecurso() {
+        return this.tipoRecurso;
     }
 
     /**
-     * @param tipo the tipo to set
+     * @param tipoRecurso the tipoRecurso to set
      */
-    public void setTipo(TipoRecurso tipo) {
-        this.tipo = tipo;
+    public void setTipoRecurso(TipoRecurso tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
+    }
+
+    public boolean getDisponivel() {
+        return this.disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+    
+    public void print() {
+        Saida.print(getId() + "\t" + getNome() + (getNome().length() < 10 ? "\t\t" : "\t"));
+        Saida.print((this.tipoRecurso instanceof Humano) ? "Humano\t" : "Equipamento");
+        Saida.println("\t" + getDisponivel() + "\t\t" + getDescricao());
     }
 
     
@@ -109,10 +113,5 @@ public class Recurso extends IOSerial{
             return false;
         }
         return true;
-    }
-    
-    public void imprimirRecurso(){
-        System.out.println("\nNome: " +
-                "Tipo de Recurso: " + getTipo().getId() + "\nNome: " +getNome() + "\nDescrição: " + getDescricao());
     }
 }

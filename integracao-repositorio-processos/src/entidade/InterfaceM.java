@@ -166,7 +166,7 @@ public class InterfaceM {
             System.out.print("Informe o ID: ");
             tr.setId(Input.Int());
             System.out.print("Informe o Codigo Tipo: ");
-            ((Equipamento)tr).setCodigoTipo(Input.Int());
+            ((Equipamento)tr).setCodigoTipo(Input.Str());
             System.out.print("Informe a Descrição: ");
             ((Equipamento)tr).setDescricao(Input.Str());
         }
@@ -232,35 +232,127 @@ public class InterfaceM {
         return atv;
     }
     
-	public static void main(String[] args) throws IOException{
-            
-            InterfaceM inter = new InterfaceM();
-            Modelo mod = null;
-            int check = 1, menu = 5;
-            while (check != 0){
-                System.out.println("[1] Novo\n[2] Abrir\n[3] Salvar \n[4] Visualizar\n[5] Instanciar\n[0] Sair\nSelecione a ação desejada: ");
-                check = Input.Int();
-                if(check%menu == 1){
-                    mod = inter.novo();
-                }else{
-                    if (check %menu == 2){
+    public Instancia novaInstancia(DadosInstancia dadosInstancia, DadosRecurso dadosRecurso) {
+        Instancia inst = new Instancia();
+        int checkInstancia = 5, idRecurso;
+        inst.setNome(Entrada.leString("Nome da instância: "));
+        inst.setDescricao(Entrada.leString("Descrição: "));
+        
+        inst.setId(dadosInstancia.defineId());
+        System.out.println("\n[1] Alocar recursos\n[2] Definir tabela de execução\n[0] Menu inicial");
+        checkInstancia = Entrada.leInt("Selecione a ação desejada: ");
+        if (checkInstancia == 1) {
+            dadosRecurso.getListaRecurso();
+            dadosRecurso.imprimeRecurso();
+            idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: ");
+            while (idRecurso != 0) {
+                inst.setAlocRecursos(idRecurso);
+                dadosRecurso.imprimeRecurso();
+                idRecurso = Entrada.leInt("Escolha um recurso que deseja alocar: ");                
+            }
+        } else if (checkInstancia == 2) {
+            /**
+             * TODO Fluxo de tabela de execução adicionar aqui
+             */
+        }
+        
+        return inst;
+    }
+    
+    public Recurso novoRecurso() {
+        Recurso rec = new Recurso();
+        TipoRecurso tipoRecurso = null;
+        int tipo = 2;
+        
+        rec.setNome(Entrada.leString("Nome do recurso: "));
+        rec.setDescricao(Entrada.leString("Descrição do recurso: "));
+        rec.setDisponivel(true);
+        
+        Saida.println("Tipo do recurso:");
+        Saida.println("0 - Humano\n1 - Equipamento\n");
+        while (tipo < 0 || tipo > 1) {
+            tipo = Entrada.leInt("defina o tipo do recurso: ");
+            switch (tipo) {
+                case 0:
+                    tipoRecurso = new Humano();
+                    ((Humano)tipoRecurso).setQualificacao(Entrada.leInt("Qualificação: "));
+                    break;
+                case 1:
+                    tipoRecurso = new Equipamento();
+                    ((Equipamento)tipoRecurso).setCodigoTipo(Entrada.leString("Código do equipamento: "));
+                    ((Equipamento)tipoRecurso).setDescricao(Entrada.leString("Descrição: "));
+                    break;
+            }
+        }        
+        rec.setTipoRecurso(tipoRecurso);
+        return rec;
+    }
+    
+    public static void main(String[] args) throws IOException{
+
+        InterfaceM inter = new InterfaceM();
+        DadosInstancia dadosInstancia = new DadosInstancia();
+        DadosRecurso dadosRecurso = new DadosRecurso();
+        Modelo mod = null;
+        Instancia inst = null;
+        Recurso rec = null;
+        int checkMenu = 1, check, menu = 5;
+
+        while (checkMenu != 0){
+            System.out.println("\n - Qual item deseja selecionar? - \n[1] Modelo\n[2] Instância\n[3] Recurso\n[0] Sair\nSelecione a opção desejada: ");
+            checkMenu = Input.Int();
+            if (checkMenu%menu == 1) {
+                check = 1;
+                while (check != 0) {
+                    System.out.println("[1] Novo\n[2] Abrir\n[3] Salvar \n[4] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    check = Input.Int();
+                    if (check % menu == 1) {
+                        mod = inter.novo();
+                    } else if (check % menu == 2) {
                         mod = inter.abrir();
-                    }else{
-                        if (check%menu ==3){
-                            if(mod != null)
-                                inter.salvar(mod);
-                        }else{
-                            if (check%menu == 4)
-                                inter.visualizar(mod);
-                            else {
-                                 if(check%menu == 5)
-                                     System.out.println("Partiu instancia..");
-                            }
+                    } else if (check%menu == 3 ) {
+                        if (mod != null) {
+                            inter.salvar(mod);   
+                        } else {
+                            Saida.println("Não há modelo para ser salvo");
                         }
+                    } else if (check%menu == 4) {
+                        inter.visualizar(mod);
+                    }
+                }
+            } else if (checkMenu%menu == 2) {
+                check = 1;
+                while (check != 0) {
+                    System.out.println("\n[1] Novo\n[2] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    check = Input.Int();
+                    if (check % menu == 1) {
+                        /**
+                         * TODO o modelo deveria ser perguntado se existe aqui?
+                         */
+                        inst = inter.novaInstancia(dadosInstancia, dadosRecurso);
+                        dadosInstancia.salvarInstancia(inst);
+                    } else if (check % menu == 2) {
+                        dadosInstancia.getListaInstancia();
+                        dadosInstancia.imprimeInstancias();
+                    }
+                }
+            } else if (checkMenu%menu == 3) {
+                check = 1;
+                while (check != 0) {
+                    System.out.println("\n[1] Novo\n[2] Visualizar\n[0] voltar\nSelecione a ação desejada: ");
+                    check = Input.Int();
+                    if (check % menu == 1) {
+                        rec = inter.novoRecurso();
+                        dadosRecurso.salvarRecurso(rec);
+                    } else if (check % menu == 2) {
+                        dadosRecurso.getListaRecurso();
+                        dadosRecurso.imprimeRecurso();
                     }
                 }
             }
         }
+        Saida.println("Programa finalizado...");
+    }
 }
 
 /* TODO: Colocar alternativa 5 para ir para a instancia */

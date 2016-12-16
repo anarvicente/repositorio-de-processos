@@ -18,15 +18,11 @@ public class main extends IOSerial implements Serializable {
        ISSO FICA NO MENU DA INSTANCIA */
 
     public static void main(String[] args) {
-
-        
-        
         
         Scanner ler = new Scanner(System.in);
         TabeladeExecucao table = new TabeladeExecucao();
         
         InterfaceM inter = new InterfaceM();
-
 
         try {
             EntryFile arquivo = new EntryFile("/home/ana/NetBeansProjects/integracao-repositorio-processos/testeModelo");

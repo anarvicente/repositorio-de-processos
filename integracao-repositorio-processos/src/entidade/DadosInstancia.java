@@ -25,6 +25,10 @@ public class DadosInstancia extends IOSerial implements Serializable {
         this.listIndices = arquivo.getLstIndex();
     }
     
+    public int defineId() {
+        return listIndices.size() + 1;
+    }
+    
     public Instancia getInstancia(int i) {
         return this.listaInstancia.get(i);
     }

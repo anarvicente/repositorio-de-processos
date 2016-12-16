@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class Equipamento extends TipoRecurso implements Serializable {
 
-    private int codigoTipo;
+    private String codigoTipo;
     private String descricao;
 
     Equipamento() {
     }
 
-    public void setCodigoTipo(int i) {
+    public void setCodigoTipo(String i) {
         codigoTipo = i;
     }
 
-    public int getCodigoTipo() {
+    public String getCodigoTipo() {
         return codigoTipo;
     }
 

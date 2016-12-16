@@ -1,6 +1,5 @@
 package Serializador;
 
-import Instancia.Recurso;
 import java.io.*;
 
 /**

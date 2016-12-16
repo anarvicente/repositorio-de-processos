@@ -6,8 +6,10 @@ public class Equipamento extends TipoRecurso implements Serializable{
 	
 	private int codigoTipo;
 	private String descricao;
+        
+        public Equipamento() {}
 	
-	Equipamento(int i, String s){
+	public Equipamento(int i, String s){
 		codigoTipo = i;
 		descricao = s;
 	}

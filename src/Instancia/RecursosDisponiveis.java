@@ -1,11 +1,16 @@
 package Instancia;
 
 import Modelo.*;
+import Serializador.IOSerial;
+import fronteira.Saida;
+import java.io.Serializable;
 
-public class RecursosDisponiveis {
+public class RecursosDisponiveis extends IOSerial implements Serializable {
     private Integer id;
-    private TipoRecurso tr;
+    private String nome;
+    private TipoRecurso tipoRecurso;
     private String descricao;
+    private boolean disponivel;
 
     public RecursosDisponiveis() { }
 
@@ -17,12 +22,20 @@ public class RecursosDisponiveis {
         this.id = id;
     }
 
-    public TipoRecurso getTr() {
-        return this.tr;
+    public String getNome() {
+        return this.nome;
     }
 
-    public void setTr(TipoRecurso tr) {
-        this.tr = tr;
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public TipoRecurso getTipoRecurso() {
+        return this.tipoRecurso;
+    }
+
+    public void setTipoRecurso(TipoRecurso tipoRecurso) {
+        this.tipoRecurso = tipoRecurso;
     }
 
     public String getDescricao() {
@@ -31,6 +44,20 @@ public class RecursosDisponiveis {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public boolean getDisponivel() {
+        return this.disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
+    }
+    
+    public void print() {
+        Saida.print(getId() + "\t" + getNome() + "\t");
+        Saida.print((this.tipoRecurso instanceof Humano) ? "Humano\t" : "Equipamento");
+        Saida.println("\t" + getDescricao());
     }
 
     @Override

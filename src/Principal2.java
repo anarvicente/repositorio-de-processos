@@ -9,7 +9,7 @@ import java.io.IOException;
  *
  * @author douglas
  */
-public class Principal {
+public class Principal2 {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         DadosRecurso dadosRecurso = new DadosRecurso();
         Recurso recurso;
@@ -46,14 +46,14 @@ public class Principal {
         }        
         recurso.setTipoRecurso(tipoRecurso);
 
-        dadosInstancia.salvarInstancia(inst);
+        dadosRecurso.salvarRecurso(recurso);
+        dadosRecurso.getListaRecurso();
         
-        /*dadosInstancia.getListaInstancia();
-        inst = dadosInstancia.getInstancia(6);
-        inst.setNome("sss");
-        inst.setDescricao("ggg");
-        dadosInstancia.atualizaInstancia(6, inst);*/
-        dadosInstancia.getListaInstancia();
-        dadosInstancia.imprimeInstancias();
+        /*recurso = dadosRecurso.getRecurso(1);
+        recurso.setNome("asd");
+        recurso.setDescricao("lllllllllll");
+        dadosRecurso.atualizaRecurso(1, recurso);
+        dadosRecurso.getListaRecurso();*/
+        dadosRecurso.imprimeRecurso();
     }
 }

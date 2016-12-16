@@ -1,75 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controle;
 
 import Instancia.Recurso;
-import Serializador.EntryFile;
-import Serializador.IOSerial;
-import java.io.IOException;
+import Serializador.*;
+import fronteira.Saida;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
- * @author 20151bsi0401
+ * @author douglas
  */
-public class DadosRecurso extends IOSerial {
-    private int quantRecursos;
-    private List<Long> indexRecursos = new ArrayList<>();
-    private List<Recurso> recursos = new ArrayList<>();
-    private final EntryFile arquivoRecursos;
 
+public class DadosRecurso extends IOSerial implements Serializable {
+    private Recurso recurso;
+    private ArrayList<Long> listaIndices;
+    private ArrayList<Recurso> listaRecurso;
+    private EntryFile arquivo;
+    
     public DadosRecurso() throws IOException {
-        this.quantRecursos = 0;
-        this.arquivoRecursos = new EntryFile("src/arquivos/arquivoRecursos");
-    }
-    
-    public boolean salvarRecurso(Recurso recurso){
-        if (recurso.getId() == null){
-            recurso.setId(quantRecursos);
-            quantRecursos++;
-            try{
-            indexRecursos.add(arquivoRecursos.append(recurso));
-            //arquivoRecursos.close();
-            }
-            catch (IOException ex)
-            {
-                return false;
-            }
-            
+        super();
+        try {
+            arquivo = new EntryFile("src/arquivos/arquivoRecursos");
+        } catch(IOException ioe) {
+            Saida.println("Ocorreu um erro inexperado:\n" + ioe);
         }
-        
-        return true;
+        this.listaIndices = arquivo.getLstIndex();
     }
     
-    public void lerArquivoRecursos(){
-        for(int i = 0; i < quantRecursos; i++){
-            try{
-                recursos.add((Recurso)arquivoRecursos.read(indexRecursos.get(i)));
-            }
-            catch(IOException ex){
-                
-            }
-            catch(ClassNotFoundException ex){
-                
-            }
-        }        
+    public Recurso getRecurso(int i) {
+        return this.listaRecurso.get(i);
     }
     
-    public List<Recurso> imprimirRecursosDisponiveis(){
-        Recurso recurso;
-        lerArquivoRecursos();
-        System.out.println(recursos.size());
-        if (recursos.size() >= 0){
-            for (Recurso recurso1 : recursos) {
-                recurso = recurso1;
-                if (recurso.isDisponibilidade())
-                    recurso.imprimirRecurso();
+    public ArrayList<Recurso> getListaRecurso() {
+        this.listaRecurso = new ArrayList<>();
+        try {
+            for (int i = 0; i < listaIndices.size(); i++) {
+                listaRecurso.add((Recurso)this.arquivo.read(listaIndices.get(i)));
             }
+        } catch(ClassNotFoundException | NullPointerException | IOException n) {
+            System.out.print("Ocorreu um erro inesperado: \n" + n);
         }
-        return recursos;
+        return listaRecurso;
+    }
+    
+    public boolean salvarRecurso(Recurso obj) {
+        try {
+            if (obj.getId() == null) {
+                obj.setId(listaIndices.size() + 1);
+                listaIndices.add(this.arquivo.append(obj));
+            }
+            return true;
+        } catch (IOException ioe) {
+            System.out.println("Ocorreu um erro inesperado e a instância não foi salva: \n" + ioe);
+            return false;
+        } catch (Exception e) {
+            System.out.println(e);
+            return false;
+        }
+    }
+    
+    public void imprimeRecurso() {
+        Saida.println("\nId\tNome\tTipo de Recurso\tDescrição");
+        for(int i = 0; i < listaRecurso.size(); i ++) {
+            listaRecurso.get(i).print();
+        }
     }
 }
